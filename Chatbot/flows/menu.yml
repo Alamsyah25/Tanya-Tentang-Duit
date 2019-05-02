@@ -1,0 +1,348 @@
+volatile: true
+intents:
+    reenter:
+        type: command
+        initial: false
+        fallback: false
+        condition: 'content == "reenter"'
+    gotoMenu:
+        initial: true
+        type: command
+        condition: "content == 'gotoMenu'"
+    tanya:
+        type: data
+        initial: false
+        fallback: false
+        condition: 'payload.purpose == "tanya"'
+    menu:
+        type: data
+        initial: false
+        fallback: false
+        condition: 'payload.purpose == "menu"'
+    initRencanaKeuangan:
+        type: data
+        initial: true
+        condition: 'payload.type == "rencana"'
+    initInvestasi:
+        type: data
+        initial: true
+        condition: 'payload.type == "investasi"'
+    initAset:
+        type: data
+        initial: true
+        condition: 'payload.type == "asset"'
+    initQuotes:
+        type: data
+        initial: true
+        condition: 'payload.type == "quotes"'
+    produktif:
+        type: data
+        initial: true
+        condition: 'payload.asset == "produktif"'
+    konsumtif:
+        type: data
+        initial: true
+        condition: 'payload.asset == "konsumtif"'
+    yes:
+        type: data
+        initial: false
+        fallback: false
+        condition: 'payload.yesno == "yes"'
+    no:
+        type: data
+        initial: false
+        fallback: false
+        condition: 'payload.yesno == "no"'
+states:
+    initialMenu:
+        transitions:
+            showMenu:
+                fallback: true
+        initial: true
+    showMenu:
+        action: askPurpose
+        transitions:
+            tanyaTanya:
+                condition: 'intent == "tanya"'
+            mainMenu: 
+                condition: 'intent == "menu"'
+            showMenu:
+                fallback: true
+    tanyaTanya:
+        action: askFinancialLiteracy
+        transitions:
+            tanyaTanya: 
+                fallback: true
+    mainMenu:
+        action: menuOption
+        transitions:
+            nanyaRencanaKeuangan:
+                condition: intent == "initRencanaKeuangan"
+            nanyaInvestasi:
+                condition: intent == "initInvestasi"
+            nanyaAset:
+                condition: intent == "initAset"
+            nanyaQuotes:
+                condition: intent == "initQuotes"
+            mainMenu:
+                fallback: true
+    nanyaRencanaKeuangan:
+        action: 
+            - name: giveVideo
+            - name: giveVideo1
+            - name: backToMenu
+        transitions:
+            showMenu:
+                condition: intent == "yes"
+            noBackToMenu:
+                condition: intent == "no"
+            nanyaRencanaKeuangan:
+                fallback: true
+    noBackToMenu:
+        action: finish
+        transitions:
+            noBackToMenu:
+                fallback: true
+        end: true
+    nanyaInvestasi:
+        action: giveTipsTrikInvestasi
+        transitions:
+            yesAnswer:
+                condition: 'intent == "yes"'
+            noBackToMenu:
+                condition: 'intent == "no"'
+            nanyaInvestasi:
+                fallback: true  
+    yesAnswer:
+        action: 
+            - name: TipsandTrikInvestasi
+            - name: backToMenu  
+        transitions:
+            showMenu:
+                condition: intent == "yes"
+            noBackToMenu:
+                condition: intent == "no"
+            yesAnswer:
+                fallback: true 
+    nanyaAset:
+        action: 
+            - name: TipsandTrikAsset
+            - name: TipsandTrikAsset1
+        transitions:
+            assetProduktif:
+                condition: intent == "produktif"
+            assetKonsumtif:
+                condition: intent == "konsumtif"
+            nanyaAset:
+                fallback: true
+    assetProduktif:
+        action: 
+            - name: assetProduktif
+            - name: backToMenu
+        transitions:
+            showMenu:
+                condition: intent == "yes"
+            noBackToMenu:
+                condition: intent == "no"
+            assetProduktif:
+                fallback: true
+    assetKonsumtif:
+        action: 
+            - name: assetKonsumtif
+            - name: backToMenu
+        transitions:
+            showMenu:
+                condition: intent == "yes"
+            noBackToMenu:
+                condition: intent == "no"
+            assetKonsumtif:
+                fallback: true
+    nanyaQuotes:
+        action: 
+            - name: giveImage
+            - name: backToMenu
+        transitions:
+            showMenu:
+                condition: intent == "yes"
+            noBackToMenu:
+                condition: intent == "no"
+            assetKonsumtif:
+                fallback: true
+actions:
+    TipsandTrikAsset:
+        type: text
+        options:
+            text: "Kamu tau ga sih? Aset itu dibagi dua.."
+    TipsandTrikAsset1:
+        type: template
+        options:
+            type: carousel
+            items:
+                -
+                    title: Asset Produktif
+                    text: 'Apa itu asset produktif?'
+                    thumbnailImageUrl: 'https://d3hhi5knjyj98j.cloudfront.net/f_auto,q_70/qeogpuckj3tkif8ld19l'
+                    actions:
+                        -
+                            type: postback
+                            label: Asset Produktif
+                            payload:
+                                asset: 'produktif'
+                -
+                    title: Asset Konsumtif
+                    text: 'Apa itu asset konsumtif?'
+                    thumbnailImageUrl: 'https://jurnalapps.co.id/assets/img/content/news-508311619566e7f86612b1.jpg'
+                    actions:
+                        -
+                            type: postback
+                            label: Asset Konsumtif
+                            payload:
+                                asset: konsumtif
+    assetProduktif:
+        type: text
+        options:
+            text: "Aset produktif adalah aset yang mampu menghasilkan. Ataupun apabila aset tersebut tidak menghasilkan, namun di masa depan nilainya meningkat. // Contoh aset produktif adalah rumah tinggal kamu. Walaupun tidak menghasilkan, namun nilainya dari tahun ke tahun meningkat."
+    assetKonsumtif:
+        type: text
+        options:
+            text: "Aset konsumtif adalah aset yang tidak menghasilkan, serta nilainya menurun seiring waktu. Okelah aset konsumtif dapat menghasilkan kepuasan untuk konsumennya, namun yang kita bicarakan di sini tentu aset yang menghasilkan uang, atau nilai aset bila dijual kembali lebih tinggi dibandingkan pada saat kita membelinya. //  Contohnya adalah gadget kamu. kamu menggunakan gadget hanya untuk berkomunikasi. Nilainya pun menurun apabila Anda hendak menjualnya."
+    finish:
+        type: text
+        options:
+            text: "Oke deh! TTD seneng bisa bantu kamu, Pokoknya jangan ragu-ragu tanya ke TTD yaa :)"
+    backToMenu:
+        type: 'template'
+        options:
+            type: 'button'
+            items:
+                text: Apakah kamu ingin kembali ke menu awal?
+                title: ''
+                actions:
+                    - type: 'postback'
+                      label: Ya
+                      payload:
+                            yesno: 'yes'
+                    - type: 'postback'
+                      label: Tidak
+                      payload:
+                            yesno: 'no'
+    TipsandTrikInvestasi:
+        type: text
+        options:
+            text: "1. Ketahui apa tujuanmu untuk ikut investasi.
+
+                2. Pelajari bagaimana kondisi keuanganmu.
+
+                3. Sisihkan sejumlah uang dengan pasti setiap bulannya untuk diinvestasikan.
+
+                4. Banyak menggali informasi seputar investasi.
+
+                5. Pilih investasi apa yang cocok untukmu.
+
+                6. Namun, jangan memusatkan diri pada satu investasi, sebarkan uangmu di beberapa alternatif investasi.
+
+                7. Ikuti atau pantau perkembangan investasimu.
+
+                8. Buatlah sebuah komitmen dengan dirimu sendiri.
+
+                9. Berinvestasilah sedini mungkin."
+    giveTipsTrikInvestasi:
+        type: 'template'
+        options:
+            type: 'button'
+            items:
+                text: Jangan boros selagi muda, Ini tips investasi buat kamu, mau tau?
+                title: ''
+                actions:
+                    - type: 'postback'
+                      label: Ya
+                      payload:
+                            yesno: 'yes'
+                    - type: 'postback'
+                      label: Tidak
+                      payload:
+                            yesno: 'no'
+    giveVideo:
+        type: text
+        options:
+            text: "Coba deh kamu tonton video yang TTD kasih, Semoga teredukasi yaa :)"
+    giveVideo1:
+        type: text
+        options:
+            text: "https://www.youtube.com/watch?v=ttuVo_t4XNI"
+    giveImage:
+        type: template
+        options:
+            type: image
+            items:
+                originalContentUrl: 'https://i.pinimg.com/564x/a9/92/ec/a992ec764529f2d92983adab57f91047.jpg'
+                previewImageUrl: 'https://i.pinimg.com/564x/a9/92/ec/a992ec764529f2d92983adab57f91047.jpg' 
+    askFinancialLiteracy:
+        type: text
+        options:
+            text: "Jika ada yang ingin ditanyakan soal financial literacy, Silahkan tanya ya :)"
+    askPurposeMenu:
+        type: text
+        options:
+            text: "Apa tujuan kamu $(data.name)?"
+    askPurpose:
+        type: 'template'
+        options:
+            type: 'button'
+            items:
+                text: Hello $(data.name), Silahkan pilih menu dibawah ini
+                title: ''
+                actions:
+                    - type: 'postback'
+                      label: Tanya-tanya
+                      payload:
+                            purpose: 'tanya'
+                    - type: 'postback'
+                      label: Menu Utama
+                      payload:
+                            purpose: 'menu'
+    menuOption:
+        type: template
+        options:
+            type: carousel
+            items:
+                -
+                    title: Rencana Keuangan
+                    text: 'Sudahkah kamu mengelola keuangan mu?'
+                    thumbnailImageUrl: 'https://www.dakwatuna.com/wp-content/uploads/2016/03/uang-koin-menghitung-buku-kalkulator.jpg'
+                    actions:
+                        -
+                            type: postback
+                            label: Klik disini
+                            payload:
+                                type: rencana
+                -
+                    title: Investasi
+                    text: 'Yuk Berinvestasi!'
+                    thumbnailImageUrl: 'https://cdn.idntimes.com/content-images/post/20180806/4ae01a65530309497b59e4ec6c4f0dd0_600x400.jpg'
+                    actions:
+                        -
+                            type: postback
+                            label: Klik disini
+                            payload:
+                                type: investasi 
+                -
+                    title: Asset
+                    text: 'Asset untuk masa depanmu'
+                    thumbnailImageUrl: 'https://web05.futuready.com/artikel/wp-content/uploads/2016/12/44868631_ingin-masa-depan-sejahtera-ini-dia-pilihan-asetnya-1-1.jpg'
+                    actions:
+                        -
+                            type: postback
+                            label: Klik disini
+                            payload:
+                                type: asset    
+                -
+                    title: Quotes of The Day
+                    text: 'Kumpulan quotes financial literacy'
+                    thumbnailImageUrl: 'https://d14pr3cu5atb0x.cloudfront.net/cms/Editorial-quote-video-storyboard@1x-a23043fa05.jpg'
+                    actions:
+                        -
+                            type: postback
+                            label: Klik disini
+                            payload:
+                                type: quotes

@@ -1,0 +1,40 @@
+ttd:
+    type: nl
+    options:
+        nluId: ttd-bot-team:Ttd-nl
+        token: 5ca57be7-05e0-464e-87b9-0348036c9948
+        output: value
+        threshold: 0.1
+        flatten: true
+greetings:
+    type: keyword
+    options:
+        keywords:
+            greet:
+                - hi
+                - hello
+                - hai
+                - halo
+                - hallo
+                - helo
+                - hei
+                - hay
+                - hey
+                - hoy
+                - hays
+                - heys
+                - pagi
+                - siang
+                - malem
+                - sore
+                - selamat pagi
+                - selamat siang
+                - selamat sore
+                - selamat malem
+                - woi
+                - oi
+                - cuy
+                - woiiiii
+                - wey
+                - uwey
+                - malam

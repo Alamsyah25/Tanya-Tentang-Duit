@@ -1,0 +1,38 @@
+title: 'Cara meningkatkan literasi keuangan'
+desc: 'Kamu bisa pake cara ini nih buat ningkatin literasi keuangan kamu // - Komitmen 30 menit seminggu
+
+        - Berdiskusi
+
+        - Uji coba dan pengalaman 
+
+        - Simulasi
+
+        - Konsultasi ke perencanaan keuangan'  
+
+title: 'Bagaimana management uang yang baik'
+desc:  '1 Tentukan tujuan keuangan kamu
+
+        2 Buat rencana keuangan
+
+        3 Miliki anggaran keuangan
+
+        4 Selalu catat pemasukan dan pengeluaran kamu
+
+        5 Cerdas dalam melakukan pengeluaran uang, Kamu bisa mencoba belajar berhemat setiap hari
+
+        6 Belajar berinvestasi'
+
+title: 'Apa sajakah situs web yang bagus untuk dasar-dasar keuangan pribadi?'
+desc: 'Kamu bisa coba buka https://www.360financialliteracy.org/ web portal keuangan pribadi dari Komisi Keaksaraan dan Pendidikan Keuangan federal'
+
+title: 'Bagaimana jika tujuan keuangan saya tidak tercapai?'
+desc:  'Perencanaan keuangan disusun dengan pendekatan ilmu keuangan, logika dan seni mengelola keuangan untuk mencapai tujuan-tujuan keuangan kamu
+        // Perencanaan keuangan bukan sebuah ramalan dan tidak dapat mengubah kondisi keuangan kamu
+        // Dalam waktu semalam. Perencanaan keuangan membutuhkan waktu dan proses seumur hidup. Banyak peristiwa yang berada di luar kendali kamu seperti inflasi, perubahan di pasar saham atau tingkat suku bunga yang akan mempengaruhi hasil perencanaan keuangan kamu..'
+
+title: 'Mengapa saya butuh perencanaan keuangan?'
+desc: 'Perencanaan keuangan bertujuan untuk memastikan kamu memiliki uang dalam jumlah yang tepat, waktu yang tepat dan dalam bentuk yang tepat untuk memenuhi tujuan-tujuan keuangan kamu
+        // Banyak keuntungan yang kamu dapat jika kamu memiliki sebuah perencanaan keuangan loh :)'
+
+title: 'Pengen seminar atau workshop tapi dimana ya'
+desc: 'TTD punya video seminar nih buat kamu, klik link ini aja https://www.youtube.com/watch?v=fs7fwagYDsQ'

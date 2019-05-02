@@ -1,0 +1,52 @@
+volatile: true
+active: true
+intents:
+    greet:
+        type: text
+        initial: true
+        fallback: false
+        classifier:
+          nlu: greetings
+          match: greet
+    getUserName:
+        type: text
+        priority: 5
+        classifier:
+            nlu: ttd
+            expression: 'nameloc'
+        attributes:
+            name:
+                nlu: ttd
+                path: nameloc
+                output: value
+states:
+    init:
+        initial: true
+        transitions:
+            greeting:
+                condition: 'intent == "greet"'
+            init:
+                fallback: true
+    greeting:
+        action:
+            - name: greetback
+            # - name: gotoMenu
+        transitions:
+            nameUser:
+                condition: 'intent == "getUserName"'
+                mapping:
+                    data.name: attributes.name
+            greeting: 
+                fallback: true
+    nameUser:
+        action: gotoMenu
+        end: true
+actions:
+    greetback:
+        type: text
+        options:
+            text: Hey! Btw, Nama kamu siapa?
+    gotoMenu:
+        type: command
+        options:
+            command: gotoMenu

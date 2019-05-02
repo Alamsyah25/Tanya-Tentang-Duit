@@ -1,0 +1,26 @@
+fallback: true
+intents:
+    fallbackIntent:
+        fallback: true  
+states:
+    init:
+        initial: true
+        transitions:
+            other:
+                fallback: true
+    other:
+        end: true
+        action:
+            name: fallbackAction
+actions:
+    fallbackAction:
+        type: text
+        options:
+            text: 
+                - "Apa itu tadi?"
+                - "TTD tidak mengerti, bisa kamu mengulanginya?"
+                - "Apa? Bisa kamu ulangi?"
+                - "$(data.name) bisa kamu mengulanginya?"
+                - "Bisa ga diulangi $(data.name)?"
+
+

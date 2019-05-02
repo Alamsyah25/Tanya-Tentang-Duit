@@ -1,0 +1,13 @@
+name: Ttd-Bot
+desc: Financial Literacy
+timezone: 7
+version: 0.0.82
+flows:
+    fallback: $include(./flows/fallback.yml)
+    greeting: $include(./flows/greeting.yml)
+    faq: $include(./flows/faq.yml)
+    menu: $include(./flows/menu.yml)
+config: $include(./config.yml)
+nlus: $include(./nlus.yml)
+tag: null
+id: 5dad3b37-cd78-4ad2-b0ac-cf426f528daa

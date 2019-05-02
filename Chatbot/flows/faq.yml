@@ -1,0 +1,52 @@
+volatile: true
+priority: 20
+intents:
+    faq:
+        initial: true
+        fallback: false
+        type: text
+        classifier:
+            nlu: ttd
+            expression: intent == 'ask' && faq
+        attributes:
+            faq:
+                nlu: ttd
+                path: faq   
+states:
+    init:
+        initial: true
+        transitions:
+            answer:
+                fallback: true 
+    answer:
+        end: true
+        enter: mapfaq
+        action:
+            - 
+                name: text
+                condition: "!context.faq"
+                options:
+                    text: 'Mohon maaf, $(config.botDisplayName) tidak menemukan jawaban yang sesuai dengan keluhan'
+
+            # - 
+            #   name: template
+            #   condition: context.faq == ctx.config.faqs.faq1.title
+            #   options:
+            #     type: "button"
+            #     items:
+            #         text: $(context.faq.desc)
+            #         title: $(context.faq.title)
+            #         actions:
+            #             - type: "url"
+            #               url: $(context.faq.url)
+            #               label: Lihat lebih lanjut
+            
+            - 
+                name: text
+                condition: context.faq
+                options:
+                    text: $(context.faq.desc)
+
+            
+methods:
+    mapfaq(ctx): ' ctx.context.faq = ctx.config.faqs[ctx.attributes.faq]; return ctx; '
